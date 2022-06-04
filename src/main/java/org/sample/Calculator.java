@@ -6,9 +6,22 @@ import org.sample.exception.NotSupportedOperation;
 import java.math.BigInteger;
 
 public class Calculator {
+    final IDatabase database;
+
+    public Calculator(IDatabase database) {
+        this.database = database;
+    }
+
 
     public BigInteger sum(String x, String y) {
-        return parseToBigInt(x).add(parseToBigInt(y));
+        String operation = String.format("%s+%s", x, y);
+
+        return database.get(operation)
+                .orElseGet(() -> {
+                    BigInteger sum = parseToBigInt(x).add(parseToBigInt(y));
+                    database.insert(operation, sum);
+                    return sum;
+                });
     }
 
     public BigInteger subtraction(String x, String y) {
