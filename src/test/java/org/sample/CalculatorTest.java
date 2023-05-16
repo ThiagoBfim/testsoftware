@@ -3,6 +3,7 @@ package org.sample;
 
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.sample.exception.DivisionByZeroNotAllowed;
@@ -22,6 +23,7 @@ class CalculatorTest {
     }
 
     @Test
+    @DisplayName("Should return 3 when sum 1 + 2")
     void shouldSumIntegerNumbers() {
         BigInteger sum = new Calculator(database).sum("1", "2");
         assertThat(sum).isEqualTo(3);
